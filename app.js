@@ -37,6 +37,21 @@ app.use('/users', usersRouter);
 const funcionarios = require('./routes/funcionarios')
 app.use('/funcionarios', funcionarios)
 
+const vendas = require('./routes/vendas')
+app.use('/vendas', vendas)
+
+const produtos = require('./routes/produtos')
+app.use('/produtos', produtos)
+
+const itemVendas = require('./routes/item_vendas')
+app.use('/item_vendas', itemVendas)
+
+const estoques = require('./routes/estoques')
+app.use('/estoques', estoques)
+
+const fornecedores = require('./routes/fornecedores')
+app.use('/fornecedores', fornecedores)
+
 
 
 
