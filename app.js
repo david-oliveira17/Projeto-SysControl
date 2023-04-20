@@ -9,6 +9,19 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+//conexão ao BD-------------------------------------------------------
+const db = require('./models')
+
+try{
+    db.sequelize.authenticate()
+    console.log('SEQUELIZE: connection has been established successfully.')
+}
+catch(error){
+    console.error('* SEQUELIZE: unable to connect to the database', error)
+    process.exit(1)   //encerra o servidor com erro
+}
+//----------------------------------------------------------------------
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -17,5 +30,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+
+
+/****************** ROTAS ******************/
+const funcionarios = require('./routes/funcionarios')
+app.use('/funcionarios', funcionarios)
+
+
+
 
 module.exports = app;
