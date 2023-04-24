@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.hasMany(models.Venda, {
+        foreignKey: 'cod_func',  //Campo da tabela estrangeira
+        sourceKey: 'id',        //Campo da tabela local
+        as: 'vendas'         //Nome do campo de associação(plural)
+      })
     }
   }
   Funcionario.init({

@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.Funcionario, {
+        foreignKey: 'cod_func',     //Nome do campo na tabela de origem
+        targetKey: 'id',           //Nome do campo na tabela de destino
+        as: 'funcionario'                 //Nome do atributo para exibição
+   })
     }
   }
   Venda.init({
