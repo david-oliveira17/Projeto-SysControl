@@ -9,6 +9,11 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 
+// Habilita que qualquer origem de front-end possa
+// acessar o back-end
+const cors = require('cors')
+app.use(cors())
+
 //conexão ao BD-------------------------------------------------------
 const db = require('./models')
 
