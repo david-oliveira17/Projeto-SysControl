@@ -10,7 +10,17 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.belongsTo(models.Venda, {  //Nome da outra tabela
+        foreignKey: 'cod_venda',     //Nome do campo de associação nesta tabela
+        targetKey: 'id',           //Nome do campo de id da outra tabela
+        as: 'venda'                 //Nome do atributo para exibição
+      })
+
+      this.belongsTo(models.Produto, {  //Nome da outra tabela
+        foreignKey: 'cod_prod',     //Nome do campo de associação nesta tabela
+        targetKey: 'id',           //Nome do campo de id da outra tabela
+        as: 'produto'                 //Nome do atributo para exibição
+      })
     }
   }
   ItemVenda.init({
@@ -21,10 +31,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     cod_prod: {
-      type: DataTypes.INTEGER,
-      allowNull: false
-    },
-    cod_func: {
       type: DataTypes.INTEGER,
       allowNull: false
     },

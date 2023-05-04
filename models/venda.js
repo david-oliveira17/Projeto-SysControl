@@ -15,6 +15,13 @@ module.exports = (sequelize, DataTypes) => {
         targetKey: 'id',           //Nome do campo na tabela de destino
         as: 'funcionario'                 //Nome do atributo para exibição
    })
+
+   this.belongsToMany(models.Produto, {
+    through: 'item_vendas',    //Tabela intermediaria
+    foreignKey: 'cod_venda',   //Chave estrangeira da tabela intermediária
+    otherKey: 'cod_prod',          //Outra chave da tabela intermediaria
+    as: 'produtos'                   //Nome do campo de associação (plural)
+  })
     }
   }
   Venda.init({

@@ -10,7 +10,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      this.hasMany(models.Produto, { //Nome da tabela associada
+        foreignKey: 'id',  //Campo que sera associado na outra tabela
+        sourceKey: 'id',        //Campo da tabela local
+        as: 'produto'         //Nome do campo de associação(plural)
+      })
     }
   }
   Estoque.init({
@@ -19,10 +23,6 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true,
       primaryKey: true,
       type: DataTypes.INTEGER
-    },
-    cod_func: {
-      type: DataTypes.INTEGER,
-      allowNull: false
     },
     cod_prod: {
       type: DataTypes.INTEGER,
