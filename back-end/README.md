@@ -71,8 +71,12 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 
-excluir campo cod_func das tabelas:
-- produto
-- fornecedor
-- item_venda
-- estoque
+    "nome": "David",
+    "endereco": "Rua dos Anjos, 555",
+    "email": "david@bol.com",
+    "telefone": "48484848",
+    "cargo": "Operador",
+    "cpf": "230.230.230-23",
+    "data_nasc": "1989-01-01T00:00:00.000Z",
+    "login": "david",
+    "senha": "454545",
