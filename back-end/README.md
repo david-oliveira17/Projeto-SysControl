@@ -80,3 +80,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
     "data_nasc": "1989-01-01T00:00:00.000Z",
     "login": "david",
     "senha": "454545",
+
+    (02/04) Data grid na listagem de métodos de pagamento

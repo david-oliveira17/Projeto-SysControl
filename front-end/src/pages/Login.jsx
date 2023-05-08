@@ -12,7 +12,7 @@ import myfetch from '../utils/myfetch'
 export default function Login() {
 
   const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
+  const [senha, setSenha] = React.useState('')
   const [showWaiting, setShowWaiting] = React.useState(false)
   const [snack, setSnack] = React.useState({
     show: false,
@@ -22,14 +22,14 @@ export default function Login() {
 
   function handleChange(event) {
     if (event.target.name === 'email') setEmail(event.target.value)
-    else setPassword(event.target.value)
+    else setSenha(event.target.value)
   }
 
   async function handleSubmit(event) {
     event.preventDefault()      // Impede o recarregamento da página
     setShowWaiting(true) // Mostra o spinner de espera
     try {
-        const result = await myfetch.post('/funcionarios/login', { email, password })
+        const result = await myfetch.post('/funcionarios/login', { email, senha })
 
         window.localStorage.setItem('token', result.token)
   
@@ -110,7 +110,7 @@ export default function Login() {
               type="password"
               fullWidth
               onChange={handleChange}
-              value={password}
+              value={senha}
             />
             <Button variant="contained" type="submit" color="secondary" fullWidth>
               Enviar

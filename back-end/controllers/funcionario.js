@@ -17,7 +17,7 @@ const controller = {}  //objeto vazio
 controller.create = async (req, res) => {
     try{
         // Criptografa a senha
-        req.body.password = await bcrypt.hash(req.body.password, 12)
+        req.body.senha = await bcrypt.hash(req.body.senha, 12)
 
         await Funcionario.create(req.body)
         //HTTP 201: Created
@@ -58,10 +58,10 @@ controller.retrieveOne = async (req, res) => {
 controller.update = async (req,res) => {
     try {
 
-        // Se houver sido passado o campo "password",
+        // Se houver sido passado o campo "senha",
         // criptografa a senha
-        if(req.body.password) {
-            req.body.password = await bcrypt.hash(req.body.password, 12)
+        if(req.body.senha) {
+            req.body.senha = await bcrypt.hash(req.body.senha, 12)
         }
 
         const response = await Funcionario.update(
@@ -112,17 +112,20 @@ controller.login = async (req, res) => {
       // Usuário não encontrado ~> HTTP 401: Unauthorized
       if(!funcionario) return res.status(401).end()
   
-      const pwMatches = await bcrypt.compare(req.body.password, funcionario.password)
+      const pwMatches = await bcrypt.compare(req.body.senha, funcionario.senha)
   
       if(pwMatches) {
         // A senha confere
         const token = jwt.sign({
             id: funcionario.id,
-            name: funcionario.name,
+            nome: funcionario.nome,
+            endereco: funcionario.endereco,
             email: funcionario.email,
-            verified_email: funcionario.verified_email,
-            is_admin: funcionario.is_admin,
-            phone: funcionario.phone
+            telefone: funcionario.telefone,
+            cargo: funcionario.cargo,
+            cpf: funcionario.cpf,
+            data_nasc: funcionario.data_nasc
+
           },
           process.env.TOKEN_SECRET,    // Chave para criptografar o token
           { expiresIn: '24h' }         // Duração do token

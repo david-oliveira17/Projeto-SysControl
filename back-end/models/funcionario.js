@@ -52,10 +52,6 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.DATE,
       allowNull: false
     },
-    login: {
-      type: DataTypes.STRING(255),
-      allowNull: false
-    },
     senha: {
       type: DataTypes.STRING(255),
       allowNull: false
@@ -68,14 +64,14 @@ module.exports = (sequelize, DataTypes) => {
     // Esconde o campo "password" no retrieve e no retrieveOne
     defaultScope: {
       attributes: {
-        exclude: ['password']
+        exclude: ['senha']
       }
     },
     scopes: {
       // Inclui o campo "password" (necessário no login)
       withPassword: {
         attributes: {
-          include: ['password']
+          include: ['senha']
         }
       }
     }

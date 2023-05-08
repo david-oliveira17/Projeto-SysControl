@@ -37,10 +37,6 @@ module.exports = {
         type: Sequelize.DATE,
         allowNull: false
       },
-      login: {
-        type: Sequelize.STRING(255),
-        allowNull: false
-      },
       senha: {
         type: Sequelize.STRING(255),
         allowNull: false
