@@ -1,5 +1,5 @@
 //importar o model correspondente ao controller
-const {Funcionario} = require('../models')
+const { Funcionario } = require('../models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 

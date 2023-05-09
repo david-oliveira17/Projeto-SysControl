@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import myfetch from '../utils/myfetch'
+import PageTitle from '../components/ui/PageTitle'
 
 export default function Login() {
 
@@ -79,9 +80,7 @@ export default function Login() {
         </Alert>
         </Snackbar>
 
-      <Typography variant="h3" component="h1" sx={{ textAlign: 'center' }}>
-        Autentique-se
-      </Typography>
+        <PageTitle title="Autentique-se" />
 
       <Paper sx={{
         width: '512px',
@@ -102,9 +101,9 @@ export default function Login() {
               value={email}
             />
             <TextField 
-              id="password"
+              id="senha"
               className="form-field"
-              name="password" 
+              name="senha" 
               label="Senha" 
               variant="filled"
               type="password"
