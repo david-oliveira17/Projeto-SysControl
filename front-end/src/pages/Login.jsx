@@ -80,14 +80,15 @@ export default function Login() {
         </Alert>
         </Snackbar>
 
-        <PageTitle title="Autentique-se" />
+        
 
-      <Paper sx={{
-        width: '512px',
+      <Paper elevation={6} sx={{
+        width: '350px',
         maxWidth: '90%',
         margin: '25px auto 0 auto',
-        p: '12px'
+        p: '30px 30px 50px 30px'
       }}>
+        <PageTitle title="Login" />
         <Typography variant="h5" component="div">
           <form onSubmit={handleSubmit}>
             <TextField 
@@ -111,8 +112,8 @@ export default function Login() {
               onChange={handleChange}
               value={senha}
             />
-            <Button variant="contained" type="submit" color="secondary" fullWidth>
-              Enviar
+            <Button variant="contained" type="submit" color="primary" fullWidth>
+              Entrar
             </Button>            
           </form>
         </Typography>

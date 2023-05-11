@@ -9,24 +9,52 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import IconButton from '@mui/material/IconButton'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
+import ConfirmDialog from '../../components/ui/ConfirmDialog'
+import Snackbar from '@mui/material/Snackbar'
+import Alert from '@mui/material/Alert'
 
 export default function ListaProdutos() {
+  const API_PATH = '/produtos'
 
-  const [produtos, setProdutos] = React.useState([])
-  const [showWaiting, setShowWaiting] = React.useState(false)
+  const [state, setState] = React.useState({
+    produtos: [],
+    showWaiting: false,
+    showDialog: false,
+    deleteId: null,
+    snack: {
+      show: false,
+      message: '',
+      severity: 'success' // ou 'error'
+    }
+  })
+  const {
+    produtos,
+    showWaiting,
+    showDialog,
+    deleteId,
+    snack
+  } = state
 
   async function fetchData() {
-    setShowWaiting(true)
+    setState({ ...state, showWaiting: true })
     try {
-      const result = await myfetch.get('/produtos')
-      setProdutos(result)
+      const result = await myfetch.get(API_PATH)
+      setState({ 
+        ...state, 
+        produtos: result, 
+        showWaiting: false,
+        showDialog: false
+      })
     }
     catch(error) {
       console.log(error)
+      setState({ 
+        ...state, 
+        showWaiting: false,
+        showDialog: false
+      })
     }
-    finally {
-      setShowWaiting(false)
-    }
+   
   }
 
   React.useEffect(() => {
@@ -55,7 +83,7 @@ export default function ListaProdutos() {
       headerName: 'Valor Compra',
       width: 150
     },
-    /*
+    
     {
       field: 'edit',
       headerName: 'Editar',
@@ -75,12 +103,67 @@ export default function ListaProdutos() {
       align: 'center',
       width: 90,
       renderCell: params => (
-        <IconButton aria-label="excluir">
+        <IconButton 
+          aria-label="excluir"
+          onClick={() => setState({
+            ...state,
+            deleteId: params.id,  // guarda o id do item a ser excluído
+            showDialog: true      // mostra o diálogo de confirmação
+          })}
+        >
           <DeleteForeverIcon color="error" />
         </IconButton>
       )
-    }*/
+    }
   ];
+
+  async function handleDialogClose(answer) {
+    if(answer) {
+      // Fecha o diálogo de confirmação e exibe o backdrop
+      setState({ ...state, showWaiting: true, showDialog: false })
+      try {
+        await myfetch.delete(`${API_PATH}/${deleteId}`)
+        setState({
+          ...state,
+          showWaiting: false,   // esconde o backdrop
+          showDialog: false,    // esconde o diálogo de confirmação
+          snack: {              // exibe a snackbar
+            show: true,
+            message: 'Item excluído com sucesso',
+            severity: 'success'
+          }
+        })
+        // Recarrega os dados da listagem
+        fetchData()
+      }
+      catch(error) {
+        console.error(error)
+        setState({
+          ...state,
+          showWaiting: false,   // esconde o backdrop
+          showDialog: false,    // esconde o diálogo de confirmação
+          snack: {              // exibe a snackbar
+            show: true,
+            message: 'ERRO: ' + error.message,
+            severity: 'error'
+          }
+        })
+      }
+    }
+    else {
+      // Fecha o diálogo de confirmação
+      setState({ ...state, showDialog: false })
+    }
+  }
+
+  function handleSnackClose(event, reason) {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setState({ ...state, snack: { show: false } })
+  };
+
+
 
   return (
     <>
@@ -91,9 +174,21 @@ export default function ListaProdutos() {
         <CircularProgress color="inherit" />
       </Backdrop>
 
-      
+      <ConfirmDialog 
+        title="Excluir Item"
+        open={showDialog}
+        onClose={handleDialogClose}
+      >
+        Deseja realmente excluir este item?
+      </ConfirmDialog>
 
-      <Paper elevation={4} sx={{ height: 400, width: '1000px', margin: '0 auto' }}>
+      <Snackbar open={snack.show} autoHideDuration={4000} onClose={handleSnackClose}>
+        <Alert onClose={handleSnackClose} severity={snack.severity} sx={{ width: '100%' }}>
+          {snack.message}
+        </Alert>
+      </Snackbar>
+
+      <Paper elevation={4} sx={{ height: 400, width: '1200px', margin: '0 auto' }}>
         <SectionTitle title="Produtos cadastrados"  />
         <DataGrid
           rows={produtos}

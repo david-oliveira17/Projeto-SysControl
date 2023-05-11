@@ -1,0 +1,18 @@
+{
+  "nome_prod": "Feijao carioca 1kg",
+  "valor_compra": 6.00,
+  "valor_venda": 10.00,
+  "cod_forn": 1
+}
+
+
+{
+    "nome": "Joao",
+    "endereco": "Rua das Flores, 555",
+    "email": "joao@gmail.com",
+    "telefone": "48484848",
+    "cargo": "Operador",
+    "cpf": "230.230.444-23",
+    "data_nasc": "1989-01-01T00:00:00.000Z",
+    "senha": "Abc1234"
+}
