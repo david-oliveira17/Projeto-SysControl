@@ -9,6 +9,7 @@ import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
 import myfetch from '../utils/myfetch'
 import PageTitle from '../components/ui/PageTitle'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
 
@@ -20,6 +21,8 @@ export default function Login() {
     message: '',
     severity: 'success' // ou 'error'
   })
+
+  const navigate = useNavigate()
 
   function handleChange(event) {
     if (event.target.name === 'email') setEmail(event.target.value)
@@ -40,6 +43,8 @@ export default function Login() {
           message: 'Autenticação realizada com sucesso!',
           severity: 'success'
         })
+
+        navigate('/')
     }
     catch(error) {
       console.error(error)
@@ -85,7 +90,7 @@ export default function Login() {
       <Paper elevation={6} sx={{
         width: '350px',
         maxWidth: '90%',
-        margin: '25px auto 0 auto',
+        margin: '100px auto 0 auto',
         p: '30px 30px 50px 30px'
       }}>
         <PageTitle title="Login" />

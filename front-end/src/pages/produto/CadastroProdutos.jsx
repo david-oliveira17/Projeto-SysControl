@@ -12,6 +12,10 @@ import CircularProgress from '@mui/material/CircularProgress'
 import ConfirmDialog from '../../components/ui/ConfirmDialog'
 import Snackbar from '@mui/material/Snackbar'
 import Alert from '@mui/material/Alert'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import { Link } from 'react-router-dom'
+import AddCircleIcon from '@mui/icons-material/AddCircle'
 
 export default function ListaProdutos() {
   const API_PATH = '/produtos'
@@ -187,6 +191,23 @@ export default function ListaProdutos() {
           {snack.message}
         </Alert>
       </Snackbar>
+
+      <Box sx={{
+        display: "flex",
+        justifyContent: "right",
+        marginBottom: "25px"
+      }}>
+        <Link to="new">
+          <Button 
+            variant="contained" 
+            size="large" 
+            color="secondary"
+            startIcon={<AddCircleIcon />}
+          >
+            Cadastrar novo
+          </Button>
+        </Link>
+      </Box>
 
       <Paper elevation={4} sx={{ height: 400, width: '1200px', margin: '0 auto' }}>
         <SectionTitle title="Produtos cadastrados"  />
