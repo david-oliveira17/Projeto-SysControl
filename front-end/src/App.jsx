@@ -25,8 +25,7 @@ function App() {
         <Route path="/" element={ 
           <AuthGuard> <Home /> </AuthGuard>
         } />
-
-          
+ 
         <Route path="/produto" element={ 
           <AuthGuard> <ListaProdutos /> </AuthGuard> 
         } />

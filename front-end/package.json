@@ -17,6 +17,7 @@
     "@mui/x-data-grid": "^6.3.1",
     "@mui/x-data-grid-pro": "^6.3.1",
     "cors": "^2.8.5",
+    "joi": "^17.9.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.11.1"
