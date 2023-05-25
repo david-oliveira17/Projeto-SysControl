@@ -5,6 +5,8 @@ import HeaderBar from './components/ui/HeaderBar'
 import Box from '@mui/material/Box'
 import ListaProdutos from './pages/produto/CadastroProdutos'
 import CadastroProdutosForm from './pages/produto/CadastroProdutosForm'
+import ListaFuncionarios from './pages/funcionario/CadastroFuncionario'
+import CadastroFuncionariosForm from './pages/funcionario/CadastroFuncionarioForm'
 
 function AuthGuard({children}) {
   // Estaremos autenticados se tivermos um token gravado no localStorage
@@ -32,6 +34,14 @@ function App() {
 
         <Route path="/produto/new" element={ 
           <AuthGuard> <CadastroProdutosForm /> </AuthGuard> 
+        } />
+
+        <Route path="/funcionario" element={ 
+          <AuthGuard> <ListaFuncionarios /> </AuthGuard> 
+        } />
+
+        <Route path="/funcionario/new" element={ 
+          <AuthGuard> <CadastroFuncionariosForm /> </AuthGuard> 
         } />
 
 

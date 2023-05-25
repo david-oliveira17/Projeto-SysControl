@@ -8,19 +8,24 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Notification from '../../components/ui/Notification'
 import { useNavigate } from 'react-router-dom'
-import Produto from '../../models/Produto'
+import Funcionario from '../../models/Funcionario'
 import getValidationMessages from '../../utils/getValidationMessages'
 
-export default function CadastroProdutosForm() {
-  const API_PATH = '/produtos'
+export default function CadastroFuncionariosForm() {
+  const API_PATH = '/funcionarios'
 
   const navigate = useNavigate()
 
   const [state, setState] = React.useState({
-    produto: {
-      nome_prod: '',
-      valor_compra: '',
-      valor_venda: ''
+    funcionario: {
+      nome: '',
+      endereco: '',
+      email: '',
+      telefone: '',
+      cargo: '',
+      cpf: '',
+      data_nasc: '',
+      senha: ''
     },
     errors: {},
     showWaiting: false,
@@ -29,16 +34,16 @@ export default function CadastroProdutosForm() {
     }
   })
   const {
-    produto,
+    funcionario,
     errors,
     showWaiting,
     notif
   } = state
 
   function handleFormFieldChange(event) {
-    const produtoCopy = {...produto}
-    produtoCopy[event.target.name] = event.target.value
-    setState({...state, produto: produtoCopy})
+    const funcionarioCopy = {...funcionario}
+    funcionarioCopy[event.target.name] = event.target.value
+    setState({...state, funcionario: funcionarioCopy})
   }
 
   function handleFormSubmit(event) {
@@ -52,9 +57,9 @@ export default function CadastroProdutosForm() {
     setState({...state, showWaiting: true, errors: {}})
     try {
        //Chama a validação da biblioteca Joi
-       await Produto.validateAsync(produto, { abortEarly: false })
+       await Funcionario.validateAsync(funcionario, { abortEarly: false })
 
-      await myfetch.post(API_PATH, produto)
+      await myfetch.post(API_PATH, funcionario)
       // DAR FEEDBACK POSITIVO E VOLTAR PARA A LISTAGEM
       setState({
         ...state, 
@@ -90,7 +95,7 @@ export default function CadastroProdutosForm() {
     }
 
     //Se o item foi salvo com sucesso, retorna a pagina de listagem
-    if(notif.severity === 'success') navigate("/produto")
+    if(notif.severity === 'success') navigate("/funcionario")
 
     setState({ ...state, notif: { ...notif, show: false } })
   };
@@ -112,53 +117,95 @@ export default function CadastroProdutosForm() {
         {notif.message}
       </Notification>
 
-      <PageTitle title="Cadastrar novo produto" />
+      <PageTitle title="Cadastrar novo funcionário" />
 
       <form onSubmit={handleFormSubmit}>
         <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
-          label="Nome Produto" 
+          label="Nome Funcionario" 
           variant="filled"
           required
-          name="nome_prod"  // Nome do campo na tabela
-          value={produto.nome_prod}   // Nome do campo na tabela
+          name="nome"  // Nome do campo na tabela
+          value={funcionario.nome}   // Nome do campo na tabela
           onChange={handleFormFieldChange}
-          error={errors?.description}
-          helperText={errors?.description}
+          error={errors?.nome}
+          helperText={errors?.nome}
         />
 
         <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
-          label="Fornecedor" 
+          label="Endereço" 
           variant="filled"
           required
-          name="cod_forn"  // Nome do campo na tabela
-          value={produto.cod_forn}   // Nome do campo na tabela
+          name="endereco"  // Nome do campo na tabela
+          value={funcionario.endereco}   // Nome do campo na tabela
           onChange={handleFormFieldChange}
-          error={errors?.cod_forn}
-          helperText={errors?.cod_forn}
+          error={errors?.endereco}
+          helperText={errors?.endereco}
         />
 
         <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
-          label="Valor Compra" 
+          label="Email" 
           variant="filled"
-          type="number"
           required
-          name="valor_compra"  // Nome do campo na tabela
-          value={produto.valor_compra}   // Nome do campo na tabela
+          name="email"  // Nome do campo na tabela
+          value={funcionario.email}   // Nome do campo na tabela
           onChange={handleFormFieldChange}
-          error={errors?.valor_compra}
-          helperText={errors?.valor_compra}
+          error={errors?.email}
+          helperText={errors?.email}
         />
 
         <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
-          label="Valor Venda" 
+          label="Telefone" 
           variant="filled"
-          type="number"
           required
-          name="valor_venda"  // Nome do campo na tabela
-          value={produto.valor_venda}   // Nome do campo na tabela
+          name="telefone"  // Nome do campo na tabela
+          value={funcionario.telefone}   // Nome do campo na tabela
           onChange={handleFormFieldChange}
-          error={errors?.valor_venda}
-          helperText={errors?.valor_venda}
+          error={errors?.telefone}
+          helperText={errors?.telefone}
+        />
+
+        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
+          label="Cargo" 
+          variant="filled"
+          required
+          name="cargo"  // Nome do campo na tabela
+          value={funcionario.cargo}   // Nome do campo na tabela
+          onChange={handleFormFieldChange}
+          error={errors?.cargo}
+          helperText={errors?.cargo}
+        />
+
+        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
+          label="CPF" 
+          variant="filled"
+          required
+          name="cpf"  // Nome do campo na tabela
+          value={funcionario.cpf}   // Nome do campo na tabela
+          onChange={handleFormFieldChange}
+          error={errors?.cpf}
+          helperText={errors?.cpf}
+        />
+
+        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
+          label="Data Nasc" 
+          variant="filled"
+          required
+          name="data_nasc"  // Nome do campo na tabela
+          value={funcionario.data_nasc}   // Nome do campo na tabela
+          onChange={handleFormFieldChange}
+          error={errors?.data_nasc}
+          helperText={errors?.data_nasc}
+        />
+
+        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
+          label="Senha" 
+          variant="filled"
+          required
+          name="senha"  // Nome do campo na tabela
+          value={funcionario.senha}   // Nome do campo na tabela
+          onChange={handleFormFieldChange}
+          error={errors?.senha}
+          helperText={errors?.senha}
         />
 
         <Fab sx={{ margin: "50px 0px 50px 60px", width: "300px" }}

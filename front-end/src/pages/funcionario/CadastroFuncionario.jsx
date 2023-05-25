@@ -16,11 +16,11 @@ import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
 import AddCircleIcon from '@mui/icons-material/AddCircle'
 
-export default function ListaProdutos() {
-  const API_PATH = '/produtos'
+export default function ListaFuncionarios() {
+  const API_PATH = '/funcionarios'
 
   const [state, setState] = React.useState({
-    produtos: [],
+    funcionarios: [],
     showWaiting: false,
     showDialog: false,
     deleteId: null,
@@ -31,7 +31,7 @@ export default function ListaProdutos() {
     }
   })
   const {
-    produtos,
+    funcionarios,
     showWaiting,
     showDialog,
     deleteId,
@@ -44,7 +44,7 @@ export default function ListaProdutos() {
       const result = await myfetch.get(API_PATH)
       setState({ 
         ...state, 
-        produtos: result, 
+        funcionarios: result, 
         showWaiting: false,
         showDialog: false
       })
@@ -67,26 +67,45 @@ export default function ListaProdutos() {
   const columns = [
     { field: 'id', headerName: 'Código', width: 90 },
     {
-      field: 'nome_prod',
-      headerName: 'Nome do Produto',
+      field: 'nome',
+      headerName: 'Nome',
       width: 300
     },
     {
-      field: 'fornecedor',
-      headerName: 'Fornecedor',
-      width: 250,
-      valueGetter: params => params.row.fornecedor.nome_empresa
+      field: 'endereco',
+      headerName: 'Endereço',
+      width: 250
     },
     {
-      field: 'valor_venda',
-      headerName: 'Valor Venda',
+      field: 'email',
+      headerName: 'Email',
       width: 150
     },
     {
-      field: 'valor_compra',
-      headerName: 'Valor Compra',
+      field: 'telefone',
+      headerName: 'Telefone',
       width: 150
     },
+    {
+        field: 'cargo',
+        headerName: 'Cargo',
+        width: 150
+    },
+    {
+        field: 'cpf',
+        headerName: 'CPF',
+        width: 150
+      },
+      {
+        field: 'data_nasc',
+        headerName: 'Data Nasc',
+        width: 150
+      },
+      {
+        field: 'senha',
+        headerName: 'Senha',
+        width: 150
+      },
     
     {
       field: 'edit',
@@ -194,7 +213,7 @@ export default function ListaProdutos() {
         {notif.message}
       </Notification>
 
-      <SectionTitle title="Produtos cadastrados"  />
+      <SectionTitle title="Usuários cadastrados"  />
 
       <Box sx={{
         display: "flex",
@@ -215,7 +234,7 @@ export default function ListaProdutos() {
 
       <Paper elevation={4} sx={{ height: 400, width: '1200px', margin: '0 auto' }}>
         <DataGrid
-          rows={produtos}
+          rows={funcionarios}
           columns={columns}
           initialState={{
             pagination: {
