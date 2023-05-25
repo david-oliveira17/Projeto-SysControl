@@ -5,25 +5,25 @@ const Produto = Joi.object({
         .min(1)
         .max(999)
         .required()
-        .error(new Error('Ofornecedor é obrigatório')),
+        .messages({'*': 'O fornecedor é obrigatório'}),
 
     nome_prod: Joi.string()
         .min(0)
         .max(100)
         .required()
-        .error(new Error('O nome do produto deve ser informado')),
+        .messages({'*': 'O nome do produto deve ser informado'}),
 
     valor_compra: Joi.number()
         .min(0)
         .max(100)
         .required()
-        .error(new Error('O valor de compra é obrigatório')),
+        .messages({'*': 'O valor de compra é obrigatório'}),
 
     valor_venda: Joi.number()
         .min(0)
         .max(100)
         .required()
-        .error(new Error('O valor de venda é obrigatório')),
+        .messages({'*': 'O valor de venda é obrigatório'}),
 
 })
 

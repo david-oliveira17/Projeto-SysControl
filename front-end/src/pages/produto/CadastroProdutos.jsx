@@ -193,6 +193,8 @@ export default function ListaProdutos() {
         {notif.message}
       </Notification>
 
+      <SectionTitle title="Produtos cadastrados"  />
+
       <Box sx={{
         display: "flex",
         justifyContent: "right",
@@ -202,7 +204,7 @@ export default function ListaProdutos() {
           <Button 
             variant="contained" 
             size="large" 
-            color="secondary"
+            color="primary"
             startIcon={<AddCircleIcon />}
           >
             Cadastrar novo
@@ -211,7 +213,6 @@ export default function ListaProdutos() {
       </Box>
 
       <Paper elevation={4} sx={{ height: 400, width: '1200px', margin: '0 auto' }}>
-        <SectionTitle title="Produtos cadastrados"  />
         <DataGrid
           rows={produtos}
           columns={columns}
