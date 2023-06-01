@@ -8,28 +8,26 @@ import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Notification from '../../components/ui/Notification'
 import { useNavigate } from 'react-router-dom'
-import Funcionario from '../../models/Funcionario'
+import Fornecedor from '../../models/Fornecedor'
 import getValidationMessages from '../../utils/getValidationMessages'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import { Link } from 'react-router-dom'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
-export default function CadastroFuncionariosForm() {
-  const API_PATH = '/funcionarios'
+export default function CadastroFornecedoresForm() {
+  const API_PATH = '/fornecedores'
 
   const navigate = useNavigate()
 
   const [state, setState] = React.useState({
-    funcionario: {
-      nome: '',
+    fornecedor: {
+      cnpj: '',
+      nome_empresa: '',
       endereco: '',
       email: '',
-      telefone: '',
-      cargo: '',
-      cpf: '',
-      data_nasc: '',
-      senha: ''
+      site: '',
+      telefone: ''
     },
     errors: {},
     showWaiting: false,
@@ -38,16 +36,16 @@ export default function CadastroFuncionariosForm() {
     }
   })
   const {
-    funcionario,
+    fornecedor,
     errors,
     showWaiting,
     notif
   } = state
 
   function handleFormFieldChange(event) {
-    const funcionarioCopy = {...funcionario}
-    funcionarioCopy[event.target.name] = event.target.value
-    setState({...state, funcionario: funcionarioCopy})
+    const fornecedorCopy = {...fornecedor}
+    fornecedorCopy[event.target.name] = event.target.value
+    setState({...state, fornecedor: fornecedorCopy})
   }
 
   function handleFormSubmit(event) {
@@ -61,9 +59,9 @@ export default function CadastroFuncionariosForm() {
     setState({...state, showWaiting: true, errors: {}})
     try {
        //Chama a validação da biblioteca Joi
-       await Funcionario.validateAsync(funcionario, { abortEarly: false })
+       await Fornecedor.validateAsync(fornecedor, { abortEarly: false })
 
-      await myfetch.post(API_PATH, funcionario)
+      await myfetch.post(API_PATH, fornecedor)
       // DAR FEEDBACK POSITIVO E VOLTAR PARA A LISTAGEM
       setState({
         ...state, 
@@ -99,7 +97,7 @@ export default function CadastroFuncionariosForm() {
     }
 
     //Se o item foi salvo com sucesso, retorna a pagina de listagem
-    if(notif.severity === 'success') navigate("/funcionario")
+    if(notif.severity === 'success') navigate("/fornecedor")
 
     setState({ ...state, notif: { ...notif, show: false } })
   };
@@ -121,14 +119,14 @@ export default function CadastroFuncionariosForm() {
         {notif.message}
       </Notification>
 
-      <PageTitle title="Cadastrar novo funcionário" />
+      <PageTitle title="Cadastrar novo fornecedor" />
 
       <Box sx={{
         display: "flex",
         justifyContent: "left",
         margin: "25px 0px 25px 50px"
       }}>
-        <Link to="/funcionario">
+        <Link to="/fornecedor">
           <Button 
             variant="contained" 
             size="large" 
@@ -142,14 +140,25 @@ export default function CadastroFuncionariosForm() {
 
       <form onSubmit={handleFormSubmit}>
         <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
-          label="Nome Funcionario" 
+          label="CNPJ" 
           variant="filled"
           required
-          name="nome"  // Nome do campo na tabela
-          value={funcionario.nome}   // Nome do campo na tabela
+          name="cnpj"  // Nome do campo na tabela
+          value={fornecedor.cnpj}   // Nome do campo na tabela
           onChange={handleFormFieldChange}
-          error={errors?.nome}
-          helperText={errors?.nome}
+          error={errors?.cnpj}
+          helperText={errors?.cnpj}
+        />
+
+        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
+          label="Nome Fornecedor" 
+          variant="filled"
+          required
+          name="nome_empresa"  // Nome do campo na tabela
+          value={fornecedor.nome_empresa}   // Nome do campo na tabela
+          onChange={handleFormFieldChange}
+          error={errors?.nome_empresa}
+          helperText={errors?.nome_empresa}
         />
 
         <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
@@ -157,7 +166,7 @@ export default function CadastroFuncionariosForm() {
           variant="filled"
           required
           name="endereco"  // Nome do campo na tabela
-          value={funcionario.endereco}   // Nome do campo na tabela
+          value={fornecedor.endereco}   // Nome do campo na tabela
           onChange={handleFormFieldChange}
           error={errors?.endereco}
           helperText={errors?.endereco}
@@ -168,10 +177,20 @@ export default function CadastroFuncionariosForm() {
           variant="filled"
           required
           name="email"  // Nome do campo na tabela
-          value={funcionario.email}   // Nome do campo na tabela
+          value={fornecedor.email}   // Nome do campo na tabela
           onChange={handleFormFieldChange}
           error={errors?.email}
           helperText={errors?.email}
+        />
+
+        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
+          label="Site" 
+          variant="filled"
+          name="site"  // Nome do campo na tabela
+          value={fornecedor.site}   // Nome do campo na tabela
+          onChange={handleFormFieldChange}
+          error={errors?.site}
+          helperText={errors?.site}
         />
 
         <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
@@ -179,54 +198,10 @@ export default function CadastroFuncionariosForm() {
           variant="filled"
           required
           name="telefone"  // Nome do campo na tabela
-          value={funcionario.telefone}   // Nome do campo na tabela
+          value={fornecedor.telefone}   // Nome do campo na tabela
           onChange={handleFormFieldChange}
           error={errors?.telefone}
           helperText={errors?.telefone}
-        />
-
-        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
-          label="Cargo" 
-          variant="filled"
-          required
-          name="cargo"  // Nome do campo na tabela
-          value={funcionario.cargo}   // Nome do campo na tabela
-          onChange={handleFormFieldChange}
-          error={errors?.cargo}
-          helperText={errors?.cargo}
-        />
-
-        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
-          label="CPF" 
-          variant="filled"
-          required
-          name="cpf"  // Nome do campo na tabela
-          value={funcionario.cpf}   // Nome do campo na tabela
-          onChange={handleFormFieldChange}
-          error={errors?.cpf}
-          helperText={errors?.cpf}
-        />
-
-        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
-          label="Data Nasc" 
-          variant="filled"
-          required
-          name="data_nasc"  // Nome do campo na tabela
-          value={funcionario.data_nasc}   // Nome do campo na tabela
-          onChange={handleFormFieldChange}
-          error={errors?.data_nasc}
-          helperText={errors?.data_nasc}
-        />
-
-        <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
-          label="Senha" 
-          variant="filled"
-          required
-          name="senha"  // Nome do campo na tabela
-          value={funcionario.senha}   // Nome do campo na tabela
-          onChange={handleFormFieldChange}
-          error={errors?.senha}
-          helperText={errors?.senha}
         />
 
         <Fab sx={{ margin: "50px 0px 50px 60px", width: "300px" }}

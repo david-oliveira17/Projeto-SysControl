@@ -7,6 +7,8 @@ import ListaProdutos from './pages/produto/CadastroProdutos'
 import CadastroProdutosForm from './pages/produto/CadastroProdutosForm'
 import ListaFuncionarios from './pages/funcionario/CadastroFuncionario'
 import CadastroFuncionariosForm from './pages/funcionario/CadastroFuncionarioForm'
+import ListaFornecedores from './pages/fornecedor/CadastroFornecedor'
+import CadastroFornecedoresForm from './pages/fornecedor/CadastroFornecedorForm'
 
 function AuthGuard({children}) {
   // Estaremos autenticados se tivermos um token gravado no localStorage
@@ -42,6 +44,14 @@ function App() {
 
         <Route path="/funcionario/new" element={ 
           <AuthGuard> <CadastroFuncionariosForm /> </AuthGuard> 
+        } />
+
+        <Route path="/fornecedor" element={ 
+          <AuthGuard> <ListaFornecedores /> </AuthGuard> 
+        } />
+
+        <Route path="/fornecedor/new" element={ 
+          <AuthGuard> <CadastroFornecedoresForm /> </AuthGuard> 
         } />
 
 

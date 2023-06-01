@@ -10,6 +10,10 @@ import Notification from '../../components/ui/Notification'
 import { useNavigate } from 'react-router-dom'
 import Produto from '../../models/Produto'
 import getValidationMessages from '../../utils/getValidationMessages'
+import Box from '@mui/material/Box'
+import Button from '@mui/material/Button'
+import { Link } from 'react-router-dom'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'
 
 export default function CadastroProdutosForm() {
   const API_PATH = '/produtos'
@@ -113,6 +117,23 @@ export default function CadastroProdutosForm() {
       </Notification>
 
       <PageTitle title="Cadastrar novo produto" />
+
+      <Box sx={{
+        display: "flex",
+        justifyContent: "left",
+        margin: "25px 0px 25px 50px"
+      }}>
+        <Link to="/produto">
+          <Button 
+            variant="contained" 
+            size="large" 
+            color="primary"
+            startIcon={<ArrowBackIcon />}
+          >
+            Voltar
+          </Button>
+        </Link>
+      </Box>
 
       <form onSubmit={handleFormSubmit}>
         <TextField sx={{ margin: "30px 160px 30px 80px", width: "600px" }}
