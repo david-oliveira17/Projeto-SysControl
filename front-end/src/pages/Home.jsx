@@ -8,7 +8,8 @@ import Button from '@mui/material/Button'
 export default function Home() {
   return (
     <>
-      <PageTitle title="Home" />
+      <PageTitle title="SysControl -
+      Sistema de gerenciamento de estoque" />
 
       <Box sx={{
         display: "flex",
@@ -53,7 +54,7 @@ export default function Home() {
             size="large" 
             color="secondary"
           >
-            Cadastro Produtos
+          Cadastro Produtos
           </Button>
         </Link>
       </Box>
