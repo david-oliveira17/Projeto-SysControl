@@ -3,7 +3,7 @@ import Typography from '@mui/material/Typography'
 
 export default function PageTitle({title}) {
   return (
-    <Typography variant="h3" component="h2" sx={{ textAlign: 'center', mb: '30px' }}>
+    <Typography variant="h3" component="h2" sx={{ textAlign: 'center', mb: '10px' }}>
       {title}
     </Typography>
   )

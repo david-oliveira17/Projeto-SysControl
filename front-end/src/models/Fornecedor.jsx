@@ -35,7 +35,7 @@ const Fornecedor = Joi.object({
         .required()
         .messages({'*': 'O telefone é obrigatório'})
 
-})
+}).options({allowUnknown: true})
 
 
 export default Fornecedor

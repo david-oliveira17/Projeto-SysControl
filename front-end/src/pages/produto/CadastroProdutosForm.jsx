@@ -1,5 +1,5 @@
 import React from 'react'
-import PageTitle from '../../components/ui/PageTitle'
+import SectionTitle from '../../components/ui/SectionTitle'
 import TextField from '@mui/material/TextField'
 import SendIcon from '@mui/icons-material/Send'
 import Fab from '@mui/material/Fab'
@@ -7,7 +7,7 @@ import myfetch from '../../utils/myfetch'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Notification from '../../components/ui/Notification'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Produto from '../../models/Produto'
 import getValidationMessages from '../../utils/getValidationMessages'
 import Box from '@mui/material/Box'
@@ -19,6 +19,7 @@ export default function CadastroProdutosForm() {
   const API_PATH = '/produtos'
 
   const navigate = useNavigate()
+  const params = useParams()
 
   const [state, setState] = React.useState({
     produto: {
@@ -52,21 +53,58 @@ export default function CadastroProdutosForm() {
     sendData()
   }
 
+  // Este useEffect será executando apenas durante o carregamento
+  // inicial da página
+  React.useEffect(() => {
+    // Se houver parâmetro id na rota, devemos carregar um registro
+    // existente para edição
+    if(params.id) fetchData()
+  }, [])
+
+  async function fetchData() {
+    setState({...state, showWaiting: true, errors:{}})
+    try {
+      const result = await myfetch.get(`${API_PATH}/${params.id}`)
+      setState({
+        ...state,
+        produto: result,
+        showWaiting: false
+      })
+    }
+    catch(error) {
+      console.error(error)
+      setState({
+        ...state, 
+        showWaiting: false,
+        errors: errorMessages,
+        notif: {
+          severity: 'error',
+          show: true,
+          message: 'ERRO: ' + error.message
+        }
+      })
+    }
+  }
+
   async function sendData() {
     setState({...state, showWaiting: true, errors: {}})
     try {
        //Chama a validação da biblioteca Joi
        await Produto.validateAsync(produto, { abortEarly: false })
 
-      await myfetch.post(API_PATH, produto)
-      // DAR FEEDBACK POSITIVO E VOLTAR PARA A LISTAGEM
+     // Registro já existe: chama PUT para atualizar
+     if (params.id) await myfetch.put(`${API_PATH}/${params.id}`, produto)
+
+     // Registro não existe: chama POST para criar
+     else await myfetch.post(API_PATH, produto)
+
       setState({
         ...state, 
         showWaiting: false,
         notif: {
           severity: 'success',
           show: true,
-          message: 'Novo item salvo com sucesso'
+          message: 'Item salvo com sucesso'
         }
       })
     }
@@ -116,7 +154,7 @@ export default function CadastroProdutosForm() {
         {notif.message}
       </Notification>
 
-      <PageTitle title="Cadastrar novo produto" />
+      <SectionTitle title={params.id ? "Editar produto" : "Cadastrar novo produto"} />
 
       <Box sx={{
         display: "flex",

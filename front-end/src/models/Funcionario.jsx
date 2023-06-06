@@ -21,7 +21,7 @@ const Funcionario = Joi.object({
 
     telefone: Joi.string()
         .min(8)
-        .max(12)
+        .max(15)
         .required()
         .messages({'*': 'O telefone é obrigatório'}),
 
@@ -47,7 +47,7 @@ const Funcionario = Joi.object({
         .required()
         .messages({'*': 'A senha é obrigatória'})
 
-})
+}).options({allowUnknown: true})
 
 
 export default Funcionario

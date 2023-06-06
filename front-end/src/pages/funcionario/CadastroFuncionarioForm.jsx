@@ -1,5 +1,5 @@
 import React from 'react'
-import PageTitle from '../../components/ui/PageTitle'
+import SectionTitle from '../../components/ui/SectionTitle'
 import TextField from '@mui/material/TextField'
 import SendIcon from '@mui/icons-material/Send'
 import Fab from '@mui/material/Fab'
@@ -7,7 +7,7 @@ import myfetch from '../../utils/myfetch'
 import Backdrop from '@mui/material/Backdrop'
 import CircularProgress from '@mui/material/CircularProgress'
 import Notification from '../../components/ui/Notification'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Funcionario from '../../models/Funcionario'
 import getValidationMessages from '../../utils/getValidationMessages'
 import Box from '@mui/material/Box'
@@ -19,6 +19,7 @@ export default function CadastroFuncionariosForm() {
   const API_PATH = '/funcionarios'
 
   const navigate = useNavigate()
+  const params = useParams()
 
   const [state, setState] = React.useState({
     funcionario: {
@@ -57,21 +58,58 @@ export default function CadastroFuncionariosForm() {
     sendData()
   }
 
+  // Este useEffect será executando apenas durante o carregamento
+  // inicial da página
+  React.useEffect(() => {
+    // Se houver parâmetro id na rota, devemos carregar um registro
+    // existente para edição
+    if(params.id) fetchData()
+  }, [])
+
+  async function fetchData() {
+    setState({...state, showWaiting: true, errors:{}})
+    try {
+      const result = await myfetch.get(`${API_PATH}/${params.id}`)
+      setState({
+        ...state,
+        funcionario: result,
+        showWaiting: false
+      })
+    }
+    catch(error) {
+      console.error(error)
+      setState({
+        ...state, 
+        showWaiting: false,
+        errors: errorMessages,
+        notif: {
+          severity: 'error',
+          show: true,
+          message: 'ERRO: ' + error.message
+        }
+      })
+    }
+  }
+
   async function sendData() {
     setState({...state, showWaiting: true, errors: {}})
     try {
        //Chama a validação da biblioteca Joi
        await Funcionario.validateAsync(funcionario, { abortEarly: false })
 
-      await myfetch.post(API_PATH, funcionario)
-      // DAR FEEDBACK POSITIVO E VOLTAR PARA A LISTAGEM
+      // Registro já existe: chama PUT para atualizar
+      if (params.id) await myfetch.put(`${API_PATH}/${params.id}`, funcionario)
+
+      // Registro não existe: chama POST para criar
+      else await myfetch.post(API_PATH, funcionario)
+
       setState({
         ...state, 
         showWaiting: false,
         notif: {
           severity: 'success',
           show: true,
-          message: 'Novo item salvo com sucesso'
+          message: 'Item salvo com sucesso'
         }
       })
     }
@@ -121,7 +159,7 @@ export default function CadastroFuncionariosForm() {
         {notif.message}
       </Notification>
 
-      <PageTitle title="Cadastrar novo funcionário" />
+      <SectionTitle title={params.id ? "Editar usuário" : "Cadastrar novo usuário"} />
 
       <Box sx={{
         display: "flex",

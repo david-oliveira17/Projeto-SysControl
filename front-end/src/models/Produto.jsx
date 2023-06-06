@@ -25,7 +25,7 @@ const Produto = Joi.object({
         .required()
         .messages({'*': 'O valor de venda é obrigatório'}),
 
-})
+}).options({allowUnknown: true})
 
 
 export default Produto

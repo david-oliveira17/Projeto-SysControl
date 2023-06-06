@@ -38,6 +38,10 @@ function App() {
           <AuthGuard> <CadastroProdutosForm /> </AuthGuard> 
         } />
 
+        <Route path="/produto/:id" element={ 
+            <AuthGuard> <CadastroProdutosForm /> </AuthGuard> 
+        } />
+
         <Route path="/funcionario" element={ 
           <AuthGuard> <ListaFuncionarios /> </AuthGuard> 
         } />
@@ -46,12 +50,20 @@ function App() {
           <AuthGuard> <CadastroFuncionariosForm /> </AuthGuard> 
         } />
 
+        <Route path="/funcionario/:id" element={ 
+            <AuthGuard> <CadastroFuncionariosForm /> </AuthGuard> 
+        } />
+
         <Route path="/fornecedor" element={ 
           <AuthGuard> <ListaFornecedores /> </AuthGuard> 
         } />
 
         <Route path="/fornecedor/new" element={ 
           <AuthGuard> <CadastroFornecedoresForm /> </AuthGuard> 
+        } />
+
+        <Route path="/fornecedor/:id" element={ 
+            <AuthGuard> <CadastroFornecedoresForm /> </AuthGuard> 
         } />
 
 
